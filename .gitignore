@@ -1,0 +1,14 @@
+#IDE
+.idea/
+
+#COMPILED CLASS FILE
+*.class
+
+#MAVEN
+target
+
+#LOG FILE
+*.log
+
+#ANOTHER FILE
+*.iml
