@@ -63,8 +63,3 @@ public class CreateUserTest extends RequestSpec {
                 .body(matchesJsonSchemaInClasspath("create_user_response.json"));
     }
 }
-//
-//        +2есть тест кейсы
-//        +2используется RequestSpecification или ResponceSpecification check
-//        +3не менее 2-х тестов на создание пользователя check
-//        +3не менее 2-х тестов на получение пользователя по имени
