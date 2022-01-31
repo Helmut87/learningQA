@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -68,6 +69,18 @@ public class GetUserByNameTest extends RequestSpec {
                 .extract()
                 .response();
         response.getBody().print();
+    }
+
+    @Test()
+    public void testUserJsonSchemaCheck() {
+
+        RestAssured.given()
+                .when()
+                .get(EndPoints.getUserByName + username)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .body(matchesJsonSchemaInClasspath("get_user_by_name_response.json"));
     }
 
 }
