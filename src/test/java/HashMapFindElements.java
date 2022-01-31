@@ -1,7 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,16 +10,19 @@ public class HashMapFindElements extends BaseSetUp {
 
     public static void main(String[] args) {
 
-        HashMap<Integer, String> passportsAndNames = new HashMap<>();
+        HashMap<List<WebElement>, String> hm = new HashMap<>();
 
         driver.manage().window().maximize();
         driver.get(URL);
 
         driver.findElements(By.className("lessons__new-item-time"));
 
-
         List<WebElement> listOfCourses = driver.findElements(By.className("lessons__new-item-title"));
-//
+        for (int i = 0; i < listOfCourses.size(); i++) {
+            String prices = listOfCourses.get(i).findElement(By.className("lessons__new-item-time")).getText();
+            hm.put(listOfCourses, prices);
+        }
+        System.out.println(hm);
 //        WebElement correct = listOfCourses.stream()
 //                .filter((element) -> element.getText().contains(String.valueOf(courseName)))
 //                .findFirst()
