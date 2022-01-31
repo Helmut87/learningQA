@@ -2,8 +2,6 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
-
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,9 +20,9 @@ public class CreateUserTest extends RequestSpec {
     public void testCreateSimpleUser() {
         Map<String, Object> jsonBodyUsingMap = new HashMap<>();
         jsonBodyUsingMap.put("id", 0);
-        jsonBodyUsingMap.put("username", "Username1");
-        jsonBodyUsingMap.put("firstName", "UserFirstName1");
-        jsonBodyUsingMap.put("lastName", "UserLastName");
+        jsonBodyUsingMap.put("username", "username1");
+        jsonBodyUsingMap.put("firstName", "userFirstName1");
+        jsonBodyUsingMap.put("lastName", "userLastName");
         jsonBodyUsingMap.put("email", "email1@email.com");
         jsonBodyUsingMap.put("password", "pass1");
         jsonBodyUsingMap.put("phone", "8800800111");
@@ -47,9 +45,9 @@ public class CreateUserTest extends RequestSpec {
     public void testCreateUserJsonSchema() {
        Map<String, Object> jsonBodyUsingMap = new HashMap<>();
         jsonBodyUsingMap.put("id", 0);
-        jsonBodyUsingMap.put("username", "Username2");
-        jsonBodyUsingMap.put("firstName", "UserFirstName2");
-        jsonBodyUsingMap.put("lastName", "UserLastName2");
+        jsonBodyUsingMap.put("username", "username2");
+        jsonBodyUsingMap.put("firstName", "userFirstName2");
+        jsonBodyUsingMap.put("lastName", "userLastName2");
         jsonBodyUsingMap.put("email", "email2@email.com");
         jsonBodyUsingMap.put("password", "pass2");
         jsonBodyUsingMap.put("phone", "8800800222");
