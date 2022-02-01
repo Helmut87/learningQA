@@ -1,48 +1,62 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.OptionalInt;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class HashMapFindElements extends BaseSetUp {
+public class HashMapFindElements {
 
-    private static final String URL = "https://otus.ru";
+    private static final String URL = "https://otus.ru/online/";
+    private static WebDriver driver;
 
     public static void main(String[] args) {
 
-        HashMap<List<WebElement>, String> hm = new HashMap<>();
+        Pattern pattern = Pattern.compile("\\d{1,5}");
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+
+        HashMap<String, String> hm = new HashMap<>();
 
         driver.manage().window().maximize();
         driver.get(URL);
 
-        driver.findElements(By.className("lessons__new-item-time"));
-
-        List<WebElement> listOfCourses = driver.findElements(By.className("lessons__new-item-title"));
+        List<WebElement> listOfCourses = driver.findElements(By.xpath(".//div[@class = 'lessons__new-item-container']"));
         for (int i = 0; i < listOfCourses.size(); i++) {
-            String prices = listOfCourses.get(i).findElement(By.className("lessons__new-item-time")).getText();
-            hm.put(listOfCourses, prices);
+            String title = listOfCourses.get(i).findElement(By.className("lessons__new-item-title")).getText();
+            String prices = listOfCourses.get(i).findElement(By.className("lessons__new-item-price")).getText();
+            hm.put(title, prices);
         }
-        System.out.println(hm);
-//        WebElement correct = listOfCourses.stream()
-//                .filter((element) -> element.getText().contains(String.valueOf(courseName)))
-//                .findFirst()
-//                .orElse(null);
 
-//        HashMap<String,String> hm= new HashMap<String,String>();
-//        List<WebElement> locations = driver.findElements(By.xpath("//div[@data-metadata-id='locations']//div[@data-automation-id='facetValue']"));  //get list of locations
-//        for(int i=0; i<locations.size();i++) //iterate over list
-//        {
-//            String cities = locations.get(i).findElement(By.cssSelector("label[id*=CheckBox-locations]")).getText(); //get location name
-//            String jobNumber = locations.get(i).findElement(By.cssSelector("span[id*=CountLabel-locations]")).getText().replaceAll("[^0-9]", ""); // get no. of jobs in that particular location
-//            hm.put(cities, jobNumber);  // put it as key-value pair in hashmap
-//
-//        }
-//        Set s=hm.entrySet();
-//        Iterator is=s.iterator();
-//        while(is.hasNext())
-//        {
-//            Map.Entry m= (Map.Entry)is.next();
-//            System.out.println(m.getKey()+"  =>  "+m.getValue()); //get values
-//        }
+        if (driver != null) {
+            driver.quit();
+        }
+
+        OptionalInt toReturn = hm.values().stream()
+                .filter(pattern.asPredicate())
+                .mapToInt(HashMapTest::applyAsInt)
+                .max();
+
+        System.out.println(toReturn.getAsInt());
+
+        for (Map.Entry<String, String> entry : hm.entrySet()) {
+            if (entry.getValue().contains(String.valueOf(toReturn.getAsInt()))) {
+                System.out.println(entry.getKey());
+            }
+        }
     }
+
+    private static int applyAsInt(String str) {
+        Pattern pattern = Pattern.compile("\\d{1,4}");
+        Matcher matcher = pattern.matcher(str);
+        matcher.find();
+        return Integer.parseInt(matcher.group(0));
+    }
+
 }
