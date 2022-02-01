@@ -15,8 +15,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.opera.OperaDriver;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MyStepdefs {
 
@@ -77,7 +78,60 @@ public class MyStepdefs {
 
     @Given("^some date value (.*)")
     public void someDateValue(@Format("dd.MM.yyyy") Date date) {
-
         System.out.println(date);
     }
+
+    @Then("user open preparatory courses")
+    public void userOpenPreparatoryCourses() {
+        driver.get("https://otus.ru/online/");
+    }
+
+    @Then("^user find the most expensive and the cheapest course$")
+    public void userFindTheMostExpensiveAndTheCheapestCourse() {
+
+        Pattern pattern = Pattern.compile("\\d{1,5}");
+
+        List<WebElement> listOfCourses = driver.findElements(By.xpath(".//div[@class = 'lessons__new-item-container']"));
+
+        HashMap<String, String> hm = new HashMap<>();
+
+        for (WebElement listOfCourse : listOfCourses) {
+            String title = listOfCourse.findElement(By.className("lessons__new-item-title")).getText();
+            String prices = listOfCourse.findElement(By.className("lessons__new-item-price")).getText().replace(" ", "");
+            hm.put(title, prices);
+        }
+
+        OptionalInt toReturnMin = hm.values().stream()
+                .filter(pattern.asPredicate())
+                .mapToInt(MyStepdefs::applyAsInt)
+                .min();
+
+        for (Map.Entry<String, String> entry : hm.entrySet()) {
+            if (entry.getValue().contains(String.valueOf(toReturnMin.getAsInt()))) {
+                System.out.println("Самый дешевый курс: " + "\"" +  entry.getKey() + "\"" + " с ценой - " + toReturnMin.getAsInt());
+
+            }
+        }
+
+        OptionalInt toReturnMax = hm.values().stream()
+                .filter(pattern.asPredicate())
+                .mapToInt(MyStepdefs::applyAsInt)
+                .max();
+
+        for (Map.Entry<String, String> entry : hm.entrySet()) {
+            if (entry.getValue().contains(String.valueOf(toReturnMax.getAsInt()))) {
+                System.out.println("Самый дорогой курс: " + "\"" +  entry.getKey() + "\"" + " с ценой - " + toReturnMax.getAsInt());
+
+            }
+        }
+
+    }
+
+    static int applyAsInt(String str) {
+        Pattern pattern = Pattern.compile("\\d{1,5}");
+        Matcher matcher = pattern.matcher(str);
+        matcher.find();
+        return Integer.parseInt(matcher.group(0));
+    }
 }
+
