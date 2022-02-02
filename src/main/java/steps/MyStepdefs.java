@@ -69,13 +69,6 @@ public class MyStepdefs {
                 .perform();
     }
 
-    @After
-    public static void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-
     @Given("^some date value (.*)")
     public void someDateValue(@Format("dd.MM.yyyy") Date date) {
         System.out.println(date);
@@ -132,6 +125,13 @@ public class MyStepdefs {
         Matcher matcher = pattern.matcher(str);
         matcher.find();
         return Integer.parseInt(matcher.group(0));
+    }
+
+    @After
+    public static void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
 

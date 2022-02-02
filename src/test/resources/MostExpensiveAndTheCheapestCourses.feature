@@ -1,4 +1,5 @@
-@withdrawal33
+@find_courses
+
 Feature: Open browser which user select/type and find and open needed course
 
   Scenario: User open "OTUS" preparatory courses and find the most expensive and the cheapest course

@@ -17,43 +17,46 @@ public class HashMapFindElements {
     private static WebDriver driver;
 
     public static void main(String[] args) {
-
-        Pattern pattern = Pattern.compile("\\d{1,5}");
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-
-        HashMap<String, String> hm = new HashMap<>();
-
         driver.manage().window().maximize();
         driver.get(URL);
 
+        Pattern pattern = Pattern.compile("\\d{1,5}");
+
         List<WebElement> listOfCourses = driver.findElements(By.xpath(".//div[@class = 'lessons__new-item-container']"));
-        for (int i = 0; i < listOfCourses.size(); i++) {
-            String title = listOfCourses.get(i).findElement(By.className("lessons__new-item-title")).getText();
-            String prices = listOfCourses.get(i).findElement(By.className("lessons__new-item-price")).getText();
+
+        HashMap<String, String> hm = new HashMap<>();
+
+        for (WebElement listOfCourse : listOfCourses) {
+            String title = listOfCourse.findElement(By.className("lessons__new-item-title")).getText();
+            String prices = listOfCourse.findElement(By.className("lessons__new-item-price")).getText().replace(" ", "");
             hm.put(title, prices);
         }
 
-        if (driver != null) {
-            driver.quit();
-        }
+        System.out.println(hm.values());
 
         OptionalInt toReturn = hm.values().stream()
                 .filter(pattern.asPredicate())
-                .mapToInt(HashMapTest::applyAsInt)
-                .max();
+                .mapToInt(HashMapFindElements::applyAsInt)
+                .min();
 
         System.out.println(toReturn.getAsInt());
 
         for (Map.Entry<String, String> entry : hm.entrySet()) {
             if (entry.getValue().contains(String.valueOf(toReturn.getAsInt()))) {
-                System.out.println(entry.getKey());
+                System.out.println("Курс: " + entry.getKey() + " с ценой - " + toReturn.getAsInt());
+
             }
+        }
+
+        if (driver != null) {
+            driver.quit();
         }
     }
 
-    private static int applyAsInt(String str) {
-        Pattern pattern = Pattern.compile("\\d{1,4}");
+     static int applyAsInt(String str) {
+        Pattern pattern = Pattern.compile("\\d{1,5}");
         Matcher matcher = pattern.matcher(str);
         matcher.find();
         return Integer.parseInt(matcher.group(0));

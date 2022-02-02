@@ -9,10 +9,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         glue = "steps",
         features = "src/test/resources",
-        tags = "@withdrawal33"
-//        dryRun = false,
-//        strict = false,
-//        snippets = SnippetType.UNDERSCORE
+        tags = "@find_courses",
+        snippets = SnippetType.UNDERSCORE
 )
 public class RunnerTest {
 }
