@@ -1,4 +1,5 @@
 import cucumber.api.java.After;
+import find.ConvertStringToDate;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -32,7 +33,7 @@ public class CourseDateTest {
     }
 
     @Test
-    public void findCourseInDate() throws ParseException {
+    public void findCourseInDate() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
