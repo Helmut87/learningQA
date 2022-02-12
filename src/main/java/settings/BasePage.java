@@ -3,7 +3,7 @@ package settings;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-abstract class BasePage {
+public abstract class BasePage {
 
     public WebDriver driver;
 
