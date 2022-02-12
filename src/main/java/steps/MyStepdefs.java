@@ -5,47 +5,33 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import find.Convert;
-import find.FindCourses;
-import settings.BasePage;
-import settings.WebDriverFactory;
+import find.FindCoursesByPrice;
+
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import settings.EndPoints;
+import settings.WebDriverFactory;
 
 import java.text.ParseException;
 import java.util.List;
 
 
 public class MyStepdefs {
-//    private static WebDriver driver;
+    private static WebDriver driver;
     protected static Actions actions;
 
 
     @Given("^user starts browser '(.*)'")
     public void getBrowserName(String browserName) {
-        WebDriverFactory.getWebDriver(browserName);
+    driver = WebDriverFactory.getWebDriver(browserName);
     }
-//    public static WebDriver getWebDriver(String browserName) {
-//        switch (browserName) {
-//            case "chrome":
-//                WebDriverManager.chromedriver().setup();
-//                return driver = new ChromeDriver();
-//            case "firefox":
-//                WebDriverManager.firefoxdriver().setup();
-//                return driver = new FirefoxDriver();
-//            case "opera":
-//                WebDriverManager.operadriver().setup();
-//                return driver = new OperaDriver();
-//            default:
-//                throw new RuntimeException("Incorrect BrowserName");
-//        }
-//    }
 
     @Then("user open main page")
     public void userOpenPageOtus() {
-        driver.get("https://otus.ru");
+        driver.get(EndPoints.mainpage);
     }
 
 
@@ -77,12 +63,12 @@ public class MyStepdefs {
 
     @Then("user open preparatory courses")
     public void userOpenPreparatoryCourses() {
-        driver.get("https://otus.ru/online/");
+        driver.get(EndPoints.preparatory_courses);
     }
 
     @Then("^user find the most expensive and the cheapest course$")
     public void userFindTheMostExpensiveAndTheCheapestCourse() {
-        new FindCourses().findCheapestAndMostExpensiveCourse();
+        new FindCoursesByPrice().findCheapestAndMostExpensiveCourse(driver);
 //        Pattern pattern = Pattern.compile("\\d{1,5}");
 //
 //        List<WebElement> listOfCourses = driver.findElements(By.xpath(".//div[@class = 'lessons__new-item-container']"));
@@ -130,11 +116,11 @@ public class MyStepdefs {
 
     }
 
-//    @After
-//    public static void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @After
+    public static void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 }
 
