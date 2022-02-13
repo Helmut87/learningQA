@@ -42,9 +42,9 @@ public class ConvertStringToDate {
 
         for (Map.Entry<String, String> entry : map.entrySet()) {
             String key = entry.getKey();
-            String tab = convertStringToDate.convertDate(entry.getValue());
+//            String tab = convertStringToDate.convertDate(entry.getValue());
             Date date = formatter.parse(convertStringToDate.convertDate(entry.getValue()));
-            map.put(key, tab);
+//            map.put(key, tab);
             map1.put(key, date);
         }
 

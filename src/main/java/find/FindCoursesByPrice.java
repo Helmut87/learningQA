@@ -1,5 +1,6 @@
 package find;
 
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class FindCoursesByPrice {
 
-    public void findCheapestAndMostExpensiveCourse(WebDriver driver) {
+    public void findCheapestAndMostExpensiveCourse(@NotNull WebDriver driver)  {
 
         Pattern pattern = Pattern.compile("\\d{1,5}");
 

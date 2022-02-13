@@ -5,7 +5,9 @@ Feature: Open browser which user select/type and find course starting on or afte
   Scenario: User open "OTUS" prepare courses page, search for courses starting on or after the specified date
     
     Given user starts browser 'chrome'
-#
+
     Then user open main page
 
-#    Given some date value 31 марта
+    Then user find course, witch start after 10 марта
+
+#    Given find some course, witch start from date 13 февраля

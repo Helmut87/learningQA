@@ -34,7 +34,6 @@ public class MyStepdefs {
         driver.get(EndPoints.mainpage);
     }
 
-
     @Then("^user find course with name '(.*)'$")
     public void userFindCourseWithNameNameOfTheCourse(String courseName) {
         driver.manage().window().maximize();
@@ -56,9 +55,9 @@ public class MyStepdefs {
                 .perform();
     }
 
-    @Given("^some date value (.*)")
-    public void someDateValue(@Format("dd.MM") String oldDateString) throws ParseException {
-        new Convert().convertDate(oldDateString);
+    @Then("user find course, witch start after (.*)")
+    public void someDateValue(@Format("dd MMMM") String oldDateString) throws ParseException {
+        new Convert().convertDate(driver, oldDateString);
     }
 
     @Then("user open preparatory courses")
@@ -69,6 +68,7 @@ public class MyStepdefs {
     @Then("^user find the most expensive and the cheapest course$")
     public void userFindTheMostExpensiveAndTheCheapestCourse() {
         new FindCoursesByPrice().findCheapestAndMostExpensiveCourse(driver);
+
 //        Pattern pattern = Pattern.compile("\\d{1,5}");
 //
 //        List<WebElement> listOfCourses = driver.findElements(By.xpath(".//div[@class = 'lessons__new-item-container']"));
@@ -122,5 +122,7 @@ public class MyStepdefs {
             driver.quit();
         }
     }
+
+
 }
 
