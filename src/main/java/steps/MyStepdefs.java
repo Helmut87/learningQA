@@ -18,7 +18,6 @@ import java.text.ParseException;
 
 public class MyStepdefs {
     private static WebDriver driver;
-    protected static Actions actions;
 
 
     @Given("^user starts browser '(.*)'")
