@@ -1,4 +1,4 @@
-@find_courses
+@find_course_by_price
 
 Feature: Open browser which user select/type and find and open needed course
 

@@ -8,6 +8,6 @@ Feature: Open browser which user select/type and find course starting on or afte
 
     Then user open main page
 
-    Then user find course, witch start after 10 марта
+    Then user find course, witch start after 14 февраля
 
-#    Given find some course, witch start from date 13 февраля
+    Then user find course, witch start in 30 апреля

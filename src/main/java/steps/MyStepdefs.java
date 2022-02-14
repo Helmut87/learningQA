@@ -4,7 +4,7 @@ import cucumber.api.Format;
 import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import find.Convert;
+import find.FindCoursesByDate;
 import find.FindCoursesByPrice;
 
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +26,7 @@ public class MyStepdefs {
 
     @Given("^user starts browser '(.*)'")
     public void getBrowserName(String browserName) {
-    driver = WebDriverFactory.getWebDriver(browserName);
+        driver = WebDriverFactory.getWebDriver(browserName);
     }
 
     @Then("user open main page")
@@ -57,7 +57,12 @@ public class MyStepdefs {
 
     @Then("user find course, witch start after (.*)")
     public void someDateValue(@Format("dd MMMM") String oldDateString) throws ParseException {
-        new Convert().convertDate(driver, oldDateString);
+        new FindCoursesByDate().findEarliestCourses(driver, oldDateString);
+    }
+
+    @Then("user find course, witch start in (.*)")
+    public void exactDateValue(@Format("dd MMMM") String exactDate) {
+        new FindCoursesByDate().findCoursesByExactDate(driver, exactDate);
     }
 
     @Then("user open preparatory courses")
