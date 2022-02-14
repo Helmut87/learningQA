@@ -2,28 +2,40 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
 
 public class CourseDateTest extends BaseSetUp {
 
-    private final String URL = "https://otus.ru";
+    private static final String URL = "https://otus.ru";
 
     @Test
-    public void findCourse() throws ParseException {
-        ConvertStringToDate convertStringToDate = new ConvertStringToDate();
-//        convertStringToDate.convertDate("15 мая 2015");
+    public String findCourse(String oldDateString) throws ParseException {
+
+        LocalDate current_date = LocalDate.now();
+        SimpleDateFormat oldDateFormat = new SimpleDateFormat("dd MMMM", Locale.getDefault());
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("dd.MM." + current_date.getYear(), Locale.getDefault());
+
+        Date date = oldDateFormat.parse(oldDateString);
+        return newDateFormat.format(date);
+    }
+
+    public static void main(String[] args) {
 
         driver.get(URL);
+        Date nowDate = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        ConvertStringToDate convertStringToDate = new ConvertStringToDate();
 
-        List<String> allDates = new ArrayList<>();
-        List<String> newDates = new ArrayList<>();
+        Map<String, String> map = new HashMap<>();
+        Map<String, Date> map1 = new HashMap<>();
 
-        driver.findElements(By.className("lessons__new-item-time"))
-                .stream()
-                .forEach(dates -> allDates.add(dates.getText()));
+        driver.findElements(By.className("lessons__new-item-time"));
+
     }
 }
+
 
 //        allDates.removeIf(s -> s.equals("О дате старта будет объявлено позже"));
 //        allDates.removeIf(x -> x.startsWith("В"));
