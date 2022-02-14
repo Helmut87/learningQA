@@ -1,4 +1,4 @@
-package find;
+package find_courses;
 
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;

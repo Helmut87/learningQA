@@ -1,4 +1,4 @@
-package find;
+package find_courses;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

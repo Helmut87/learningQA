@@ -1,4 +1,4 @@
-@check_date_course
+@check_course_by_date
 
 Feature: Open browser which user select/type and find course starting on or after the specified date
 

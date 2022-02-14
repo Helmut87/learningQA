@@ -1,5 +1,5 @@
 import cucumber.api.java.After;
-import find.ConvertStringToDate;
+import find_courses.ConvertStringToDate;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
