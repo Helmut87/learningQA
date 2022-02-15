@@ -8,27 +8,15 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
-public class CourseDateTest {
+public class CourseDateTest extends BaseSetUp {
 
     private static final String URL = "https://otus.ru";
 
-        @Test
-    public String findCourse(String oldDateString) throws ParseException {
-
-        LocalDate current_date = LocalDate.now();
-        SimpleDateFormat oldDateFormat = new SimpleDateFormat("dd MMMM", Locale.getDefault());
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("dd.MM." + current_date.getYear(), Locale.getDefault());
-
-        Date date = oldDateFormat.parse(oldDateString);
-        return newDateFormat.format(date);
-    }
-
-    public static void main(String[] args) throws ParseException {
-        WebDriver driver = WebDriverFactory.getWebDriver("chrome");
-        driver.get(URL);
-        Date nowDate = new Date();
+    @Test
+    public void findCourse() throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM", Locale.getDefault());
-        ConvertStringToDate convertStringToDate = new ConvertStringToDate();
+
+        driver.get(URL);
 
         List<WebElement> listOfCourses = driver.findElements(By.xpath(".//div[@class = 'lessons__new-item-container']"));
 
