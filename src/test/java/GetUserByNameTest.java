@@ -62,7 +62,7 @@ public class GetUserByNameTest extends RequestSpec {
     public void testGetUserByWrongName() {
         Response response = given()
                 .when()
-                .get(EndPoints.getUserByName + "username")
+                .get(EndPoints.getUserByName + GenerateRandomString.generateRandomName(8))
                 .then()
                 .assertThat()
                 .statusCode(404)
@@ -73,7 +73,6 @@ public class GetUserByNameTest extends RequestSpec {
 
     @Test()
     public void testUserJsonSchemaCheck() {
-
         RestAssured.given()
                 .when()
                 .get(EndPoints.getUserByName + username)
@@ -82,5 +81,4 @@ public class GetUserByNameTest extends RequestSpec {
                 .statusCode(200)
                 .body(matchesJsonSchemaInClasspath("get_user_by_name_response.json"));
     }
-
 }
